@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from './logo.png';
-import tp from './tp.png';
+
 import { 
   ShoppingCart, 
   History,
@@ -11,19 +11,76 @@ import {
   Star 
 } from 'lucide-react';
 
-
+const importAll = (r) => {
+    return r.keys().reduce((acc, next) => {
+      acc[next.replace('./', '')] = r(next);
+      return acc;
+    }, {});
+  };
+  
+  const saladImages = importAll(require.context('../assets/images', false, /\.(png|jpe?g|svg)$/));
 
 const SaladData = [
   {
     id: 1,
     name: 'Tropical Paradise',
-    description: 'Campuran buah tropis segar',
+    description: 'Campuran buah tropis segar dengan potongan nanas, mangga, dan pepaya',
     price: 35000,
-    image: 'https://via.placeholder.com/300x200',
+    image: saladImages['salad1.png'],
     category: 'Tropical',
-    rating: 4.5
+    rating: 4.5,
+    nutrients: {
+      calories: 120,
+      protein: 2,
+      fiber: 4
+    },
+    ingredients: ['Nanas', 'Mangga', 'Pepaya', 'Jeruk']
   },
-  // ... (data lainnya seperti sebelumnya)
+  {
+    id: 2,
+    name: 'Berry Blast',
+    description: 'Salad buah beri pilihan dengan campuran strawberry, blueberry, dan raspberry',
+    price: 38000,
+    image: saladImages['salad2.png'],
+    category: 'Berries',
+    rating: 4.7,
+    nutrients: {
+      calories: 110,
+      protein: 1.5,
+      fiber: 5
+    },
+    ingredients: ['Strawberry', 'Blueberry', 'Raspberry', 'Blackberry']
+  },
+  {
+    id: 3,
+    name: 'Exotic Dream',
+    description: 'Paduan buah eksotis dengan dragonfruit, rambutan, dan markisa',
+    price: 45000,
+    image: saladImages['salad3.png'],
+    category: 'Tropical',
+    rating: 4.7,
+    nutrients: {
+      calories: 130,
+      protein: 2.5,
+      fiber: 4.5
+    },
+    ingredients: ['Dragonfruit', 'Rambutan', 'Markisa', 'Jambu']
+  },
+  {
+    id: 4,
+    name: 'Super Antioxidant',
+    description: 'Salad super dengan kaya antioksidan dari berbagai macam beri',
+    price: 42000,
+    image: saladImages['salad4.png'],
+    category: 'Berries',
+    rating: 4.9,
+    nutrients: {
+      calories: 105,
+      protein: 1.7,
+      fiber: 5.5
+    },
+    ingredients: ['Goji Berry', 'Blackberry', 'Blueberry', 'Cranberry']
+  }
 ];
 
 const HomePage = () => {
@@ -94,27 +151,44 @@ const HomePage = () => {
               className="bg-white border rounded-lg p-3 shadow-sm"
             >
               <img 
-                src={tp} 
+                src={salad.image} 
                 alt={salad.name} 
                 className="w-full h-40 object-cover rounded-lg mb-2"
               />
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mb-2">
                 <div>
-                  <h4 className="font-bold">{salad.name}</h4>
-                  <p className="text-sm text-gray-500">{salad.description}</p>
+                  <h4 className="font-bold text-lg">{salad.name}</h4>
+                  <p className="text-sm text-gray-500 line-clamp-2">
+                    {salad.description}
+                  </p>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Star className="text-yellow-400 w-4 h-4" />
                   <span className="text-sm">{salad.rating}</span>
                 </div>
               </div>
-              <div className="flex justify-between items-center mt-2">
+              
+              {/* Informasi Nutrisi */}
+              <div className="bg-green-50 p-2 rounded-lg mb-2">
+                <div className="flex justify-between text-xs">
+                  <span>Kalori: {salad.nutrients.calories}</span>
+                  <span>Protein: {salad.nutrients.protein}g</span>
+                  <span>Serat: {salad.nutrients.fiber}g</span>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center">
                 <span className="font-bold text-green-600">
                   Rp {salad.price.toLocaleString()}
                 </span>
-                <button className="bg-green-100 p-2 rounded-full">
-                  <ShoppingCart className="w-4 h-4 text-green-600" />
-                </button>
+                <div className="flex space-x-2">
+                  <button className="bg-green-600 text-white p-2 rounded-lg">
+                    <ShoppingCart className="w-4 h-4" />
+                  </button>
+                  <button className="bg-green-100 p-2 rounded-lg">
+                    <Heart className="w-4 h-4 text-green-600" />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
