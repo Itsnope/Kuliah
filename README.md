@@ -1,6 +1,8 @@
 # AnimeCrafts
 
-Tugas Praktikum Kewirausahaan :
+Branch untuk tugas kelompok Praktikum Kewirausahaan. Agar bisa dihosting menggunakan Github Pages.
+
+Tugas Kelompok Praktikum Kewirausahaan :
 Membuat website sesuai studi kasus menggukanan Mobirise.  
 Studi Kasus :
 Website E-Commerce merch anime
